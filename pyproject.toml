@@ -1,0 +1,30 @@
+[project]
+name = "test"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Kane-Dan",email = "n3t.fox2@gmail.com "}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi (>=0.115.12,<0.116.0)",
+    "dotenv (>=0.9.9,<0.10.0)",
+    "alembic (>=1.16.1,<2.0.0)",
+    "docker (>=7.1.0,<8.0.0)",
+    "uvicorn (>=0.34.3,<0.35.0)",
+    "sqlalchemy (>=2.0.41,<3.0.0)",
+    "psycopg2-binary (>=2.9.10,<3.0.0)",
+    "asyncpg (>=0.30.0,<0.31.0)",
+    "pytest (>=8.4.0,<9.0.0)",
+    "pytest-asyncio (>=1.0.0,<2.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "pytest-mock (>=3.14.1,<4.0.0)",
+    "pytest-html (>=4.1.1,<5.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
