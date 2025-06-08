@@ -1,11 +1,13 @@
 from pydantic import BaseModel, validator
 from decimal import Decimal
 
+
 class WalletBase(BaseModel):
-    id : str
+    id: str
+
 
 class WalletCreate(BaseModel):
-    name : str
+    name: str
 
 
 class Operation(BaseModel):

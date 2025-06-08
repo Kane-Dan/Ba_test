@@ -1,10 +1,13 @@
-docker-compose exec web alembic upgrade head
+.PHONY: migrate create-migration db-shell up
 
-docker-compose exec web alembic revision --autogenerate -m "Init"
+migrate:
+	docker-compose exec web alembic upgrade head
 
-docker exec -it db psql -U postgres
+create-migration:
+	docker-compose exec web alembic revision --autogenerate -m "Init"
 
+db-shell:
+	docker exec -it db psql -U postgres
 
-docker-compose up --build
-
-
+up:
+	docker-compose up --build

@@ -1,9 +1,10 @@
 from fastapi import APIRouter, HTTPException
-from src.schemas import WalletBase, WalletCreate,Wallet,Operation
+from src.schemas import WalletBase, WalletCreate, Wallet, Operation
 from src.services import Walletoperations
 from uuid import UUID
 
 router = APIRouter()
+
 
 @router.post("/create_wallet")
 async def create_new_wallet(wallet_data: WalletCreate):
@@ -20,19 +21,18 @@ async def get_wallet(wallet_id: str):
         raise HTTPException(status_code=404, detail="Wallet not found")
     return wallet
 
+
 @router.post("/{wallet_UUID}/operation")
 async def perform_operation(
     wallet_id: str,
     operation: Operation,
-    
 ):
     if operation.operation_type not in ["DEPOSIT", "WITHDRAW"]:
         raise HTTPException(status_code=400, detail="Invalid operation type")
-    
+
     try:
         wallet = await Walletoperations.update_balance(wallet_id, operation)
         foundwallet = await Walletoperations.get_wallet(wallet_id)
         return {"balance": str(foundwallet.balance)}
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
-

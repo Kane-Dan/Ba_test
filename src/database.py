@@ -26,4 +26,3 @@ async def get_async_session():
 
 
 sync_session_maker = sessionmaker(bind=sync_engine)
-
