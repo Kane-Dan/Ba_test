@@ -31,8 +31,9 @@ async def perform_operation(
         raise HTTPException(status_code=400, detail="Invalid operation type")
 
     try:
-        wallet = await Walletoperations.update_balance(wallet_id, operation)
-        foundwallet = await Walletoperations.get_wallet(wallet_id)
-        return {"balance": str(foundwallet.balance)}
+        updated_wallet = await Walletoperations.update_balance(wallet_id, operation)
+        return {
+            "balance": str(updated_wallet.balance)
+        }  # Возвращаем баланс из обновленного кошелька
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))

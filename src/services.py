@@ -17,19 +17,27 @@ class Walletoperations:
     async def update_balance(wallet_id: str, operation: Operation):
         async with async_session_maker() as session:
             try:
-                wallet = await Walletoperations.get_wallet(wallet_id)
+
+                stmt = select(Wallet).where(Wallet.id == wallet_id)
+                result = await session.execute(stmt)
+                wallet = result.scalar_one_or_none()
+
                 if not wallet:
                     raise HTTPException(status_code=404, detail="Wallet not found")
+
                 if operation.operation_type == "DEPOSIT":
                     wallet.balance += operation.amount
                 elif operation.operation_type == "WITHDRAW":
                     if wallet.balance < operation.amount:
                         raise ValueError("Insufficient funds")
                     wallet.balance -= operation.amount
+
                 session.add(wallet)
                 await session.commit()
                 await session.refresh(wallet)
+
                 return wallet
+
             except SQLAlchemyError as e:
                 await session.rollback()
                 raise
