@@ -11,3 +11,4 @@ db-shell:
 
 up:
 	docker-compose up --build
+	
