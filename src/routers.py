@@ -33,7 +33,7 @@ async def perform_operation(
     try:
         updated_wallet = await Walletoperations.update_balance(wallet_id, operation)
         return {
-            "balance": str(updated_wallet.balance)
+            "balance": float(updated_wallet.balance)
         }  
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
