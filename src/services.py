@@ -11,16 +11,14 @@ class Walletoperations:
 
     async def get_wallet(wallet_id: str):
         async with async_session_maker() as session:
-            result = await session.execute(select(Wallet).where(Wallet.id == wallet_id))
+            result = await session.execute(select(Wallet).where(Wallet.id == wallet_id)).with_for_update()
         return result.scalar_one_or_none()
 
     async def update_balance(wallet_id: str, operation: Operation):
         async with async_session_maker() as session:
             try:
 
-                stmt = select(Wallet).where(Wallet.id == wallet_id)
-                result = await session.execute(stmt)
-                wallet = result.scalar_one_or_none()
+                wallet = await Walletoperations.get_wallet
 
                 if not wallet:
                     raise HTTPException(status_code=404, detail="Wallet not found")
